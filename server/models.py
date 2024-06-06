@@ -11,3 +11,16 @@ metadata = MetaData(naming_convention={
 db = SQLAlchemy(metadata=metadata)
 
 # write your models here!
+
+class Pieces (db.Model, SerializerMixin):
+    __tablename__ = "items"
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String)
+    image = db.Column(db.String)
+    category = db.Column(db.String)
+
+    # carts = db.relationship('Carts', back_populates='item')
+
+    # serialize_rules = ('-carts.item',)
+
