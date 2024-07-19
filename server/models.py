@@ -10,7 +10,7 @@ metadata = MetaData(naming_convention={
 
 db = SQLAlchemy(metadata=metadata)
 
-# write your models here!
+# write your models here! my models - users (role - audience, and performer)performers, piece
 
 class Pieces (db.Model, SerializerMixin):
     __tablename__ = "items"
@@ -24,3 +24,8 @@ class Pieces (db.Model, SerializerMixin):
 
     # serialize_rules = ('-carts.item',)
 
+class User (db.Model, SerializerMixin):
+    __tablename__="users"
+
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String, nullable=False)
