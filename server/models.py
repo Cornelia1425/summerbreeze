@@ -10,22 +10,32 @@ metadata = MetaData(naming_convention={
 
 db = SQLAlchemy(metadata=metadata)
 
-# write your models here! my models - users (role - audience, and performer)performers, piece
+# write your models here! my models - users (role - audience, and performer)piece are for performers only, events are for both performers and audience
 
-class Pieces (db.Model, SerializerMixin):
-    __tablename__ = "items"
-
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String)
-    image = db.Column(db.String)
-    category = db.Column(db.String)
-
-    # carts = db.relationship('Carts', back_populates='item')
-
-    # serialize_rules = ('-carts.item',)
 
 class User (db.Model, SerializerMixin):
     __tablename__="users"
 
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String, nullable=False)
+    name = db.Column(db.String, nullable=False)
+    role = db.Column(db.String, default='audience')
+    profile_img = db.Column(db.String, nullable=False)
+
+    _hashed_password = db.Column(db.String, nullable=False)
+    
+
+
+# write your models here! my models - piece
+
+class Piece (db.Model, SerializerMixin):
+    __tablename__ = "items"
+
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String)
+    image = db.Column(db.String)
+    video = db.Column(db.String)
+
+    event_id = db.Column(db.Integer, db.ForeignKey('events.id'))
+    event= db.relationship('Event', back_populates='pieces')
+
+    serialize_rules = ('-event.pieces',)
